@@ -43,4 +43,19 @@ router.get('/course/:courseId', auth, activityLogger('LIST_ASSIGNMENTS'), async 
   }
 });
 
+router.delete('/:id', auth, rbac('admin', 'instructor'), activityLogger('DELETE_ASSIGNMENT'), async (req, res) => {
+  try {
+    const assignment = await Assignment.findByPk(req.params.id, { include: [{ model: Course }] });
+    if (!assignment) return res.status(404).json({ error: 'Assignment not found' });
+    const allowed = req.user.role === 'admin' || assignment.Course.instructorId === req.user.id;
+    if (!allowed) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    await assignment.destroy();
+    res.json({ message: 'Deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

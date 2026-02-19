@@ -88,7 +88,7 @@ export function AssignmentDetail() {
             onChange={(e) => setContent(e.target.value)}
             rows={6}
             placeholder="Enter your assignment submission..."
-            className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             required
           />
           {submitSuccess && (
@@ -108,7 +108,7 @@ export function AssignmentDetail() {
           <h2 className="text-lg font-semibold mb-3">Submissions</h2>
           <ul className="space-y-2">
             {submissions.map((s) => (
-              <li key={s.id} className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <li key={s.id} className="p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
                 <p className="font-medium">{s.User?.name}</p>
                 <p className="text-sm text-slate-500 dark:text-slate-400">{s.User?.email}</p>
                 <pre className="mt-2 text-sm whitespace-pre-wrap">{s.content}</pre>

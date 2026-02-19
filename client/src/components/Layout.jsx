@@ -13,8 +13,8 @@ export function Layout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200">
-      <nav className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-200">
+      <nav className="border-b border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-md shadow-sm">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
           <Link to="/dashboard" className="font-semibold text-lg text-indigo-600 dark:text-indigo-400">
             Mini LMS
@@ -28,7 +28,7 @@ export function Layout({ children }) {
             </Link>
             <button
               onClick={toggleDark}
-              className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className="p-2 rounded-lg bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 transition-colors border border-white/20"
               aria-label="Toggle theme"
             >
               {dark ? (
@@ -37,7 +37,7 @@ export function Layout({ children }) {
                 <span className="text-lg" title="Dark mode">🌙</span>
               )}
             </button>
-            <span className="text-sm text-slate-500 dark:text-slate-400">{user?.name}</span>
+            <span className="text-sm text-slate-600 dark:text-slate-300">{user?.name}</span>
             <button
               onClick={handleLogout}
               className="text-sm text-red-600 dark:text-red-400 hover:underline"

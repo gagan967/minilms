@@ -47,6 +47,20 @@ export function CourseAssignments() {
     }
   };
 
+  const handleDelete = async (assignmentId) => {
+    if (!confirm('Delete this assignment?')) return;
+    try {
+      const res = await api(`/assignments/${assignmentId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setAssignments(assignments.filter(a => a.id !== assignmentId));
+      } else {
+        alert('Failed to delete');
+      }
+    } catch (e) {
+      alert('Error');
+    }
+  };
+
   return (
     <Layout>
       <Link to={`/courses/${id}`} className="text-indigo-600 dark:text-indigo-400 hover:underline mb-4 inline-block">Back to course</Link>
@@ -57,19 +71,24 @@ export function CourseAssignments() {
         </button>
       )}
       {showCreate && (
-        <form onSubmit={handleCreate} className="mb-6 p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border" required />
-          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border" />
-          <input type="datetime-local" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border" required />
+        <form onSubmit={handleCreate} className="mb-6 p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
+          <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner" required />
+          <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner" />
+          <input type="datetime-local" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="w-full mb-2 px-4 py-2 rounded border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner" required />
           <button type="submit" disabled={creating} className="px-4 py-2 rounded bg-indigo-600 text-white">Create</button>
         </form>
       )}
       {loading ? <div>Loading...</div> : (
         <ul className="space-y-2">
           {assignments.map((a) => (
-            <li key={a.id} className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <li key={a.id} className="p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
               <Link to={`/courses/${id}/assignments/${a.id}`} className="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">{a.title}</Link>
               <p className="text-sm text-slate-500 dark:text-slate-400">Due: {new Date(a.dueDate).toLocaleString()}</p>
+              {(user?.role === 'admin' || course?.instructorId === user?.id) && (
+                <button onClick={() => handleDelete(a.id)} className="mt-2 px-3 py-1 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600">
+                  Delete Assignment
+                </button>
+              )}
             </li>
           ))}
         </ul>

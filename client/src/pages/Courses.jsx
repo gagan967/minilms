@@ -52,6 +52,20 @@ export function Courses() {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!confirm('Delete this course?')) return;
+    try {
+      const res = await api(`/courses/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchCourses();
+      } else {
+        alert('Failed to delete');
+      }
+    } catch (e) {
+      alert('Error');
+    }
+  };
+
   return (
     <Layout>
       <div className="flex justify-between items-center mb-6">
@@ -67,20 +81,20 @@ export function Courses() {
       </div>
 
       {showCreate && (
-        <form onSubmit={handleCreate} className="mb-6 p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+        <form onSubmit={handleCreate} className="mb-6 p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
           <h3 className="font-semibold mb-3">New Course</h3>
           <input
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full mb-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="w-full mb-2 px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner"
             required
           />
           <textarea
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full mb-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"
+            className="w-full mb-2 px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner"
           />
           <button type="submit" disabled={creating} className="px-4 py-2 rounded-lg bg-indigo-600 text-white">
             Create
@@ -94,7 +108,7 @@ export function Courses() {
         <>
           <ul className="space-y-4">
             {courses.map((c) => (
-              <li key={c.id} className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <li key={c.id} className="p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
                 <Link to={`/courses/${c.id}`} className="text-lg font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
                   {c.title}
                 </Link>
@@ -102,6 +116,11 @@ export function Courses() {
                 <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
                   Instructor: {c.Instructor?.name || 'N/A'}
                 </p>
+                {(user?.role === 'admin' || user?.id === c.instructorId) && (
+                  <button onClick={() => handleDelete(c.id)} className="mt-2 px-3 py-1 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600">
+                    Delete Course
+                  </button>
+                )}
               </li>
             ))}
           </ul>

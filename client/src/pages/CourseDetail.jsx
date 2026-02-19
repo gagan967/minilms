@@ -82,7 +82,7 @@ export function CourseDetail() {
       {assignments.length ? (
         <ul className="space-y-2">
           {assignments.map((a) => (
-            <li key={a.id} className="p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <li key={a.id} className="p-4 rounded-lg bg-white/10 dark:bg-black/10 backdrop-blur-md border border-white/20">
               <Link to={`/courses/${id}/assignments/${a.id}`} className="font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
                 {a.title}
               </Link>

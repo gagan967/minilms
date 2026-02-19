@@ -35,7 +35,7 @@ export function Signup() {
           {dark ? '☀️' : '🌙'}
         </button>
       </div>
-      <div className="w-full max-w-md p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800">
+      <div className="w-full max-w-md p-8 rounded-2xl bg-white/20 dark:bg-black/20 backdrop-blur-md shadow-xl border border-white/20">
         <h1 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-6">Create an account</h1>
         {error && <div className="mb-4 p-3 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-sm">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -45,7 +45,7 @@ export function Signup() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               required
             />
           </div>
@@ -55,7 +55,7 @@ export function Signup() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               required
             />
           </div>
@@ -65,7 +65,7 @@ export function Signup() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-2 rounded-lg border border-white/30 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 shadow-inner focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               required
               minLength={6}
             />
